@@ -16,7 +16,10 @@ public class LoginController {
 
     @PostMapping("/login")
     public Response login(@RequestBody String username,@RequestBody String password) {
-        return loginService.Login(username,password);
+        return loginService.login(username,password);
+    }
+    public Response register(@RequestBody String username,@RequestBody String password) {
+        return loginService.register(username,password);
     }
 
 }

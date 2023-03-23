@@ -8,5 +8,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface LoginService {
-    Response Login(String username,String password);
+    Response login(String username, String password);
+
+    Response register(String username, String password);
 }
