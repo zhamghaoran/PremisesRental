@@ -10,5 +10,4 @@ import java.util.Map;
 
 public interface UserService extends IService<User> {
     Response Login(Map map, HttpSession session);
-
 }

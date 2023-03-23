@@ -1,50 +1,44 @@
 package com.rental.premisesrental.controller;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import com.rental.premisesrental.entity.User;
-import com.rental.premisesrental.service.LoginService;
+import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
 import com.rental.premisesrental.util.Response;
-import com.rental.premisesrental.utils.SMSUtils;
-import com.rental.premisesrental.utils.ValidateCodeUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 20179
  */
 @RestController
 @Slf4j
+@Api(value = "用户注册登录")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @ApiOperation(value = "登录")
     @PostMapping("/login")
-    public Response login(@RequestBody Map map, HttpSession session) {
-        return userService.Login(map,session);
+    public Response login(
+            @ApiParam(value = "登录参数")
+            @RequestBody LoginParam loginParam
+    ) {
+        return userService.Login(loginParam);
     }
 
+
+    @ApiOperation(value = "发送验证码")
     @GetMapping("/sendMsg")
-    public Response<String> sendMsg(User user,HttpSession session){
-        //获取手机号
-        String phone = user.getPhone();
-        if(!StringUtils.isEmpty(phone)){
-            //生成随机的4位验证码
-            String code = ValidateCodeUtils.generateValidateCode(4).toString();
-            //发送短信,还需要更改
-            SMSUtils.sendMessage("PremisesRent","SMS_272605519",phone,code);
-            //需要将生成的验证码保存到session中,以便验证是否正确
-            session.setAttribute(phone,code);
-            return Response.success();
-        }
-        return Response.fail();
+    public Response sendMsg(
+            @ApiParam(value = "手机号")
+            String  phone){
+        return userService.sendMsg(phone);
+
     }
 
 }

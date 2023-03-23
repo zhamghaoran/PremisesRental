@@ -1,4 +1,4 @@
-package com.rental.premisesrental.utils;
+package com.rental.premisesrental.util;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
