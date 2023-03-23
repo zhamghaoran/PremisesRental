@@ -4,11 +4,14 @@ create table `Premises rental`.user
 '
         primary key,
     username    varchar(100)                        not null comment '用户名',
-    password    varchar(100)                        not null comment '用户密码',
     create_time timestamp default CURRENT_TIMESTAMP null,
     update_time timestamp default CURRENT_TIMESTAMP null,
+    phone       varchar(11)                         null,
     constraint id
         unique (id)
 )
+    comment '用户表';
+
+
     comment '用户表';
 

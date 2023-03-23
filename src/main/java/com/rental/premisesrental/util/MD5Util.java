@@ -2,6 +2,9 @@ package com.rental.premisesrental.util;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.crypto.digest.MD5;
+import com.rental.premisesrental.entity.User;
+
+import java.net.UnknownServiceException;
 
 /**
  * @author 20179
@@ -15,5 +18,8 @@ public class MD5Util {
     public static String getMd5Encode(String data) {
         MD5 md5 = MD5.create();
         return md5.digestHex16(data);
+    }
+    public static String createUserToken(User user) {
+       return getMd5Encode(user.getUsername() + user.getPhone() + System.currentTimeMillis());
     }
 }

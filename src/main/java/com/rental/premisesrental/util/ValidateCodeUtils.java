@@ -1,4 +1,4 @@
-package com.rental.premisesrental.utils;
+package com.rental.premisesrental.util;
 
 import java.util.Random;
 

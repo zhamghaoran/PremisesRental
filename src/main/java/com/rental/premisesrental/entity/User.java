@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,11 @@ public class User {
     @TableId(value = "id")
     @ApiModelProperty("用户主键")
     private Integer id;
+    @ApiModelProperty(value = "用户名")
     private String username;
+    @ApiModelProperty(value = "手机号")
+    private String phone;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String phone;
+
 }
