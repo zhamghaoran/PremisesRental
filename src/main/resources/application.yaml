@@ -6,13 +6,13 @@ spring:
       matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/premisesrental?characterEncoding=utf-8
+    username: root
+    password: 1362775750.+Czh
   redis:
-    host:
+    host: 192.168.200.130
     port: 6379
-    password:
+    database: 0 #操作的是零号数据库
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
