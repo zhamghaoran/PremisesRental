@@ -21,6 +21,8 @@ public class Response<T> {
     public static<T> @NotNull Response<T> success() {
         return new Response<>(200,"成功",null);
     }
+
+
     public Response<T> setSuccessCode(Integer code) {
         this.setCode(code);
         return this;

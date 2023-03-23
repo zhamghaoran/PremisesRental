@@ -23,19 +23,8 @@ public class User {
     @TableId(value = "id")
     @ApiModelProperty("用户主键")
     private Integer id;
-
-    @ApiModelProperty(value = "用户名")
     private String username;
-
-    @ApiModelProperty(value = "密码")
-    private String password;
-
     private Timestamp createTime;
     private Timestamp updateTime;
-
-    public User(String username,String password) {
-        this.username = username;
-        this.password = password;
-    }
-
+    private String phone;
 }

@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PremisesRentalApplication {
 
     public static void main(String[] args) {
+        System.out.println("hallo zhouxiang");
         SpringApplication.run(PremisesRentalApplication.class, args);
     }
 
