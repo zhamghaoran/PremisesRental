@@ -102,6 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
 
     /**
      * todo 记得删除 UserHolder.put(user)
+     * //这一步可以将用户的登录token放到redis中进行保存
      */
     private void putUserIntoRedis(User user,String token) {
         //UserHolder.put(user);
