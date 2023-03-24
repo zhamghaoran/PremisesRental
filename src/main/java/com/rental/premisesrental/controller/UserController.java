@@ -41,4 +41,13 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "注册")
+    @PostMapping("/register")
+    public Response register(
+            @ApiParam(value = "登录参数")
+            @RequestBody LoginParam loginParam
+    ) {
+       return userService.register(loginParam);
+
+    }
 }

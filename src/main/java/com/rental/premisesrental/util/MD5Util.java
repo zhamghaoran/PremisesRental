@@ -20,6 +20,7 @@ public class MD5Util {
         return md5.digestHex16(data);
     }
     public static String createUserToken(User user) {
+        UserHolder.put(user);
        return getMd5Encode(user.getUsername() + user.getPhone() + System.currentTimeMillis());
     }
 }

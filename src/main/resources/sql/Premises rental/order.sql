@@ -1,6 +1,6 @@
-create table `Premises rental`.`order`
+create table `order`
 (
-    id          int auto_increment comment '订单id'
+    id          bigint auto_increment comment '订单id'
         primary key,
     user_id     int                                 not null comment '用户id
 ',

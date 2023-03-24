@@ -1,17 +1,22 @@
 package com.rental.premisesrental.service.impl;
 
+import com.aliyuncs.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.mapper.UserMapper;
 import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
-import com.rental.premisesrental.util.*;
+import com.rental.premisesrental.util.MD5Util;
+import com.rental.premisesrental.util.Response;
+import com.rental.premisesrental.util.SMSUtils;
+import com.rental.premisesrental.util.ValidateCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.rental.premisesrental.util.constant.PHONE_CODE;
@@ -52,7 +57,6 @@ public class UserServiceImpl implements UserService {
                 userMapper.insert(user);
             }
             String token = MD5Util.createUserToken(user);
-            UserHolder.put(user);
             return Response.success().setSuccessData(token);
         }
         return Response.fail();
@@ -71,5 +75,27 @@ public class UserServiceImpl implements UserService {
             return Response.success().setSuccessMessage("发送成功");
         }
         return Response.fail();
+    }
+
+    @Override
+    public Response register(LoginParam loginParam) {
+        String phone = loginParam.getPhone();
+        Integer code = loginParam.getCode();
+        String s = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
+        if (StringUtils.isEmpty(s) || code == null || !s.equals(code.toString())) {
+            return Response.fail();
+        }
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(User::getPhone,phone);
+        List<User> users = userMapper.selectList(userLambdaQueryWrapper);
+        if (!users.isEmpty()) {
+            return Response.fail().setFailMessage("用户已注册");
+        }
+        User user = new User();
+        user.setPhone(phone);
+        user.setUsername(loginParam.getUsername());
+        userMapper.insert(user);
+        String userToken = MD5Util.createUserToken(user);
+        return Response.success().setSuccessData(userToken);
     }
 }

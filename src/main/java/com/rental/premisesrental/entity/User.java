@@ -23,7 +23,7 @@ public class User {
 
     @TableId(value = "id")
     @ApiModelProperty("用户主键")
-    private Integer id;
+    private Long id;
     @ApiModelProperty(value = "用户名")
     private String username;
     @ApiModelProperty(value = "手机号")

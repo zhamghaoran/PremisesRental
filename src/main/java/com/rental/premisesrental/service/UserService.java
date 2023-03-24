@@ -16,4 +16,6 @@ public interface UserService  {
     Response Login(LoginParam loginParam);
 
     Response sendMsg(String phone);
+
+    Response register(LoginParam loginParam);
 }

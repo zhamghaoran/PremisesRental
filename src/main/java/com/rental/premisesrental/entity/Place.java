@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 public class Place {
     @ApiModelProperty(value = "场地主键")
     @TableId(value = "id")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "场地类型")
     private String type;
