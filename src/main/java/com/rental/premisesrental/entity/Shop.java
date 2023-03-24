@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.sql.DataSourceDefinitions;
 import java.sql.Timestamp;
 
 /**
@@ -18,12 +17,16 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @ApiModel(value = "商铺信息")
 public class Shop {
+
     @TableId(value = "id")
     @ApiModelProperty(value = "商铺主键")
     private Long id;
-    @ApiModelProperty(value = "地址")
+
+    @ApiModelProperty(value = "地址",required = true)
     private String location;
 
+    @ApiModelProperty(value = "绑定用户id")
+    private Long ownerId;
     private Timestamp createTime;
     private Timestamp updateTime;
 }

@@ -21,16 +21,16 @@ public class Place {
     @TableId(value = "id")
     private Long id;
 
-    @ApiModelProperty(value = "场地类型")
+    @ApiModelProperty(value = "场地类型",required = true)
     private String type;
 
-    @ApiModelProperty(value = "场地单价")
+    @ApiModelProperty(value = "场地单价",required = true)
     private Integer cost;
 
     @ApiModelProperty(value = "空闲情况")
     private Long available;
-    @ApiModelProperty(value = "商铺ID")
-    private Integer shopId;
+    @ApiModelProperty(value = "商铺ID",required = true)
+    private Long shopId;
 
     private Timestamp createTime;
     private Timestamp updateTime;

@@ -15,10 +15,12 @@ public class UserHolder {
     }
 
     public static void put(User user)  {
+        System.out.println(Thread.currentThread().threadId());
         USER_THREAD_LOCAL.set(user);
     }
 
     public static User getCurrentUser() {
+        System.out.println(Thread.currentThread().threadId());
         return USER_THREAD_LOCAL.get();
     }
 }

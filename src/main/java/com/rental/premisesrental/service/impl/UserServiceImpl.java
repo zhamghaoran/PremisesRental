@@ -1,5 +1,6 @@
 package com.rental.premisesrental.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.aliyuncs.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,10 +8,7 @@ import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.mapper.UserMapper;
 import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
-import com.rental.premisesrental.util.MD5Util;
-import com.rental.premisesrental.util.Response;
-import com.rental.premisesrental.util.SMSUtils;
-import com.rental.premisesrental.util.ValidateCodeUtils;
+import com.rental.premisesrental.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -103,7 +101,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         return Response.success().setSuccessData(token);
     }
 
+    /**
+     * todo 记得删除 UserHolder.put(user)
+     */
     private void putUserIntoRedis(User user,String token) {
-        stringRedisTemplate.opsForValue().set(USER_TOKEN + token, String.valueOf(user));
+        UserHolder.put(user);
+        stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
+        stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
     }
 }
