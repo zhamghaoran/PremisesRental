@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.rental.premisesrental.util.constant.PHONE_CODE;
+import static com.rental.premisesrental.util.constant.USER_TOKEN;
 
 /**
  * @author 20179
@@ -40,11 +41,11 @@ public class UserServiceImpl implements UserService {
         //获取验证码
         String code = loginParam.getCode().toString();
         log.info(code);
-        //从Session中获取保存的验证码
-//        Object codeInSession = session.getAttribute(phone);
-        String codeInSession = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
-        //进行验证码的比对（页面提交的验证码和Session中保存的验证码比对）
-        if (codeInSession != null && codeInSession.equals(code)) {
+        //从Redis中获取保存的验证码
+//        Object codeInRedis = session.getAttribute(phone);
+        String codeInRedis = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
+        //进行验证码的比对（页面提交的验证码和Redis中保存的验证码比对）
+        if (codeInRedis != null && codeInRedis.equals(code)) {
             //如果能够比对成功，说明登录成功
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(User::getPhone, phone);
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
                 userMapper.insert(user);
             }
             String token = MD5Util.createUserToken(user);
+            putUserIntoRedis(user,token);
             return Response.success().setSuccessData(token);
         }
         return Response.fail();
@@ -95,7 +97,12 @@ public class UserServiceImpl implements UserService {
         user.setPhone(phone);
         user.setUsername(loginParam.getUsername());
         userMapper.insert(user);
-        String userToken = MD5Util.createUserToken(user);
-        return Response.success().setSuccessData(userToken);
+        String token = MD5Util.createUserToken(user);
+        putUserIntoRedis(user,token);
+        return Response.success().setSuccessData(token);
+    }
+
+    private void putUserIntoRedis(User user,String token) {
+        stringRedisTemplate.opsForValue().set(USER_TOKEN + token, String.valueOf(user));
     }
 }
