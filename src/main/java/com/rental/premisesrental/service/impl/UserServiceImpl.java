@@ -1,6 +1,7 @@
 package com.rental.premisesrental.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.mapper.UserMapper;
 import com.rental.premisesrental.pojo.LoginParam;
@@ -21,7 +22,7 @@ import static com.rental.premisesrental.util.constant.PHONE_CODE;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
 
     @Autowired
     private UserMapper userMapper;

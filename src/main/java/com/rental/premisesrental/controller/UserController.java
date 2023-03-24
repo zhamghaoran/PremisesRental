@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Api(value = "用户注册登录")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
