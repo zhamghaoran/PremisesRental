@@ -21,4 +21,7 @@ public class LoginParam {
 
     @ApiModelProperty(value = "手机号")
     private String phone;
+
+    @ApiModelProperty(value = "用户名")
+    private String username;
 }

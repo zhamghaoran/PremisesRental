@@ -1,6 +1,6 @@
-create table `Premises rental`.shop
+create table shop
 (
-    id          int auto_increment comment '商家Id
+    id          bigint auto_increment comment '商家Id
 '
         primary key,
     location    varchar(100)                        not null comment '商铺地址Id',

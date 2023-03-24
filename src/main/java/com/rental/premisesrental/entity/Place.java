@@ -1,14 +1,12 @@
 package com.rental.premisesrental.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.annotation.sql.DataSourceDefinition;
 import java.sql.Timestamp;
 
 /**
@@ -21,7 +19,7 @@ import java.sql.Timestamp;
 public class Place {
     @ApiModelProperty(value = "场地主键")
     @TableId(value = "id")
-    private Integer id;
+    private Long id;
 
     @ApiModelProperty(value = "场地类型")
     private String type;

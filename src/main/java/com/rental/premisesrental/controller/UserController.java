@@ -1,6 +1,5 @@
 package com.rental.premisesrental.controller;
 
-import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
 import com.rental.premisesrental.util.Response;
@@ -9,7 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author 20179
@@ -40,4 +42,13 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "注册")
+    @PostMapping("/register")
+    public Response register(
+            @ApiParam(value = "登录参数")
+            @RequestBody LoginParam loginParam
+    ) {
+       return userService.register(loginParam);
+
+    }
 }

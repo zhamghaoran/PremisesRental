@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 public class Shop {
     @TableId(value = "id")
     @ApiModelProperty(value = "商铺主键")
-    private Integer id;
+    private Long id;
     @ApiModelProperty(value = "地址")
     private String location;
 
