@@ -12,4 +12,5 @@ import java.util.Map;
 public interface UserService extends IService<User> {
     public Response Login(LoginParam loginParam);
     public Response sendMsg(String phone);
+    public Response register(LoginParam loginParam);
 }

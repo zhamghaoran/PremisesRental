@@ -41,7 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         String code = loginParam.getCode().toString();
         log.info(code);
         //从Redis中获取保存的验证码
-//        Object codeInRedis = session.getAttribute(phone);
         String codeInRedis = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
         //进行验证码的比对（页面提交的验证码和Redis中保存的验证码比对）
         if (codeInRedis != null && codeInRedis.equals(code)) {
@@ -70,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
             //发送短信,还需要更改
             SMSUtils.sendMessage("PremisesRent", "SMS_272605519", phone, code);
-            //需要将生成的验证码保存到session中,以便验证是否正确
+            //需要将生成的验证码保存到redis中进行缓存
             stringRedisTemplate.opsForValue().set(PHONE_CODE + phone,code);
             stringRedisTemplate.expire(PHONE_CODE + phone,5, TimeUnit.MINUTES);
             return Response.success().setSuccessMessage("发送成功");
@@ -105,7 +104,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
      * todo 记得删除 UserHolder.put(user)
      */
     private void putUserIntoRedis(User user,String token) {
-        UserHolder.put(user);
+        //UserHolder.put(user);
         stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
         stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
     }
