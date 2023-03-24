@@ -10,6 +10,7 @@ import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
 import com.rental.premisesrental.util.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.TestOnly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -109,4 +110,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
         stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
     }
+
 }

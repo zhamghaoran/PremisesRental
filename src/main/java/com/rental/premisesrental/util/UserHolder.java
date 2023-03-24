@@ -23,4 +23,8 @@ public class UserHolder {
         System.out.println(Thread.currentThread().threadId());
         return USER_THREAD_LOCAL.get();
     }
+
+    public static void removeUser() {
+        USER_THREAD_LOCAL.remove();
+    }
 }

@@ -1,6 +1,7 @@
 package com.rental.premisesrental.config;
 
 import com.rental.premisesrental.filter.LoginCheckFilter;
+import com.rental.premisesrental.filter.RefreshTokenInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,11 +20,12 @@ public class WebMVCConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         //添加登录拦截器
-        registry.addInterceptor(new LoginCheckFilter()).excludePathPatterns(
-
-        ).order(10);
+        registry.addInterceptor(new LoginCheckFilter())
+                .excludePathPatterns(
+                        "/*"
+                ).order(1);
 
         //添加token刷新拦截器
-        registry.addInterceptor(new LoginCheckFilter(stringRedisTemplate));
+        registry.addInterceptor(new RefreshTokenInterceptor(stringRedisTemplate)).addPathPatterns("/**").order(0);
     }
 }
