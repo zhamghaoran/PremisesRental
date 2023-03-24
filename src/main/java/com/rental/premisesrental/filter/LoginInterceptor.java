@@ -1,49 +1,50 @@
 package com.rental.premisesrental.filter;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
-
 import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.util.UserHolder;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.rental.premisesrental.util.constant.USER_TOKEN;
 
-public class RefreshTokenInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
-    private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private StringRedisTemplate redisTemplate;
 
-    public RefreshTokenInterceptor(StringRedisTemplate stringRedisTemplate) {
-        this.stringRedisTemplate = stringRedisTemplate;
+    public LoginInterceptor(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    public LoginInterceptor() {
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 1.获取请求头中的token
         String token = request.getHeader("authorization");
-        if (StrUtil.isBlank(token)) {
-            return true;
+        String key =USER_TOKEN+token;
+        if (token==null){
+            return false;
         }
-        // 2.基于TOKEN获取redis中的用户
-        String key  = USER_TOKEN + token;
-        String userJSON = stringRedisTemplate.opsForValue().get(key);
+        String userJSON = redisTemplate.opsForValue().get(key);
+        if (userJSON.isEmpty()){
+            return false;
+        }
         User user = JSON.parseObject(userJSON, User.class);
 
-        // 3.判断用户是否存在
-        if (user== null) {
-            return true;
-        }
-
-        // 4.存在，保存用户信息到 ThreadLocal
         UserHolder.put(user);
-        // 5.放行
+        //设置时间
+        redisTemplate.expire(key,30, TimeUnit.MINUTES);
+
         return true;
     }
 
