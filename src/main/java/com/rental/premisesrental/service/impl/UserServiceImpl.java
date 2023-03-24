@@ -99,15 +99,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
         userMapper.insert(user);
         String token = MD5Util.createUserToken(user);
         putUserIntoRedis(user,token);
+        //将token存放到前端中
         return Response.success().setSuccessData(token);
     }
 
     /**
-     * todo 记得删除 UserHolder.put(user)
+     *
      * //这一步可以将用户的登录token放到redis中进行保存
      */
     private void putUserIntoRedis(User user,String token) {
-        //UserHolder.put(user);
         stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
         stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
     }
