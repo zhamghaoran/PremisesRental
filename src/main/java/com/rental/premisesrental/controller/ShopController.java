@@ -7,10 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 20179
@@ -39,6 +36,16 @@ public class ShopController {
             Shop shop
     ) {
         return shopService.updateShop(shop);
+    }
+
+
+    @GetMapping("/shop/{id}")
+    @ApiOperation(value = "查询商铺")
+    public Response queryShopById(
+            @ApiParam(value = "商铺信息")
+            @PathVariable("id") Long id
+    ) {
+        return shopService.queryShopById(id);
     }
 
 }

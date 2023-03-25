@@ -25,7 +25,8 @@ public class MvcConfig implements WebMvcConfigurer {
                         "/login/**",
                         "/swagger-ui/**",
                         "/swagger-resources/**",
-                        "/v2/**"
+                        "/v2/**",
+                        "/shop/**"
                 );
     }
 }
