@@ -18,10 +18,14 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor(stringRedisTemplate))
+                .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/sendMsg",
-                        "/register",
-                        "/login"
+                        "/sendMsg/**",
+                        "/register/**",
+                        "/login/**",
+                        "/swagger-ui/**",
+                        "/swagger-resources/**",
+                        "/v2/**"
                 );
     }
 }

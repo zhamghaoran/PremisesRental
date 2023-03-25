@@ -1,9 +1,7 @@
 package com.rental.premisesrental.filter;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
-
 import com.rental.premisesrental.entity.User;
 import com.rental.premisesrental.util.UserHolder;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -11,7 +9,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.rental.premisesrental.util.constant.USER_TOKEN;
@@ -43,6 +40,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
 
         // 4.存在，保存用户信息到 ThreadLocal
         UserHolder.put(user);
+        stringRedisTemplate.expire(key,1,TimeUnit.HOURS);
         // 5.放行
         return true;
     }
