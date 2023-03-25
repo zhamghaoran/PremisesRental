@@ -38,7 +38,7 @@ public class Swagger2Config {
                 .apiInfo(webApiInfo())
                 .select()
                 // 加了ApiOperation注解的类，才生成接口文档
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .apis(RequestHandlerSelectors.basePackage("com.rental.premisesrental.controller"))
                 .paths(PathSelectors.any())
                 // 只显示api路径下的页面
                 // .path(Predicates.and(PathSelectors.regex("/api/.*")))
