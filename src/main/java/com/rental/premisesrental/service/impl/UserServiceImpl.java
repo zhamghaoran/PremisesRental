@@ -58,6 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
                 userMapper.insert(user);
             }
             String token = MD5Util.createUserToken(user);
+            //登录成功,就把生成得token交付给前端.
             putUserIntoRedis(user,token);
             return Response.success().setSuccessData(token);
         }
@@ -83,13 +84,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     public Response register(LoginParam loginParam) {
         String phone = loginParam.getPhone();
         Integer code = loginParam.getCode();
+        //存储phone和code
         String s = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
         if (StringUtils.isEmpty(s) || code == null || !s.equals(code.toString())) {
             return Response.fail();
         }
+        //根据phone查询数据库中的用户信息
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.eq(User::getPhone,phone);
         List<User> users = userMapper.selectList(userLambdaQueryWrapper);
+        //不为空就直接退出
         if (!users.isEmpty()) {
             return Response.fail().setFailMessage("用户已注册");
         }
@@ -109,6 +113,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
      */
     private void putUserIntoRedis(User user,String token) {
         stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
+        //这一步是用来给token设置时间
         stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
     }
 

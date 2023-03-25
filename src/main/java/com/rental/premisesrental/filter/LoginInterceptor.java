@@ -42,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         User user = JSON.parseObject(userJSON, User.class);
 
         UserHolder.put(user);
-        //设置时间
+        //用来重新设置时间
         redisTemplate.expire(key,30, TimeUnit.MINUTES);
 
         return true;
