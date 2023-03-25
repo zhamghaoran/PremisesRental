@@ -16,8 +16,6 @@ public class PlaceServiceImpl  implements PlaceService{
 
     @Override
     public Response addPlace(Place place) {
-        return null
-                ;
-
+        return null;
     }
 }
