@@ -8,4 +8,7 @@ public interface ShopService  {
     Response addShop(Shop shop);
 
     Response updateShop(Shop shop);
+
+
+    Response queryShopById(Long id);
 }
