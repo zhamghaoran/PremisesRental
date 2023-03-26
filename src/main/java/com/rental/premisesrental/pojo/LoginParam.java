@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel
+@ApiModel(value = "登录参数")
 public class LoginParam {
 
     @ApiModelProperty(value = "验证码")

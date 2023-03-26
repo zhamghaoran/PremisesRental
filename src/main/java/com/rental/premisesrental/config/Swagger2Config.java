@@ -13,10 +13,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ParameterType;
+import springfox.documentation.service.RequestParameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -34,6 +39,7 @@ public class Swagger2Config {
     @Bean
     public Docket webApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .globalRequestParameters(customRequestHeader())
                 .groupName("Premises rental")
                 .apiInfo(webApiInfo())
                 .select()
@@ -43,6 +49,16 @@ public class Swagger2Config {
                 // 只显示api路径下的页面
                 // .path(Predicates.and(PathSelectors.regex("/api/.*")))
                 .build();
+    }
+
+    private List<RequestParameter> customRequestHeader() {
+        RequestParameter requestParameter = new RequestParameterBuilder()
+                .in(ParameterType.HEADER)
+                .name("authorization")
+                .required(true)
+                .query(param -> param.model(model -> model.scalarModel(ScalarType.STRING)))
+                .build();
+        return List.of(requestParameter);
     }
 
     private ApiInfo webApiInfo() {

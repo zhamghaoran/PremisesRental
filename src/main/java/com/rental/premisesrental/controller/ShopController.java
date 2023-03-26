@@ -48,4 +48,13 @@ public class ShopController {
         return shopService.queryShopById(id);
     }
 
+    @GetMapping("/shop/list/{page}/{limit}")
+    @ApiOperation(value = "获取商铺列表")
+    public Response queryShopList(
+            @ApiParam(value = "页码")
+            @PathVariable("page")Integer page,
+            @ApiParam(value = "每页上限")
+            @PathVariable("limit") Integer limit) {
+        return shopService.queryList(page,limit);
+    }
 }

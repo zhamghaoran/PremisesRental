@@ -39,7 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
-        if (StringUtils.isNotBlank(userJSON)) {
+        if (!StringUtils.isNotBlank(userJSON)) {
             response.setStatus(401);
             return false;
         }
