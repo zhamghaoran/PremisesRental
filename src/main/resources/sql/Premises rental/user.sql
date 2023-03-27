@@ -1,4 +1,4 @@
-create table user
+create table `Premises rental`.user
 (
     id          bigint auto_increment comment '用户Id
 '

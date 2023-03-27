@@ -28,7 +28,7 @@ public class Place {
     private Integer cost;
 
     @ApiModelProperty(value = "空闲情况")
-    private Long available;
+    private String available;
     @ApiModelProperty(value = "商铺ID",required = true)
     private Long shopId;
 

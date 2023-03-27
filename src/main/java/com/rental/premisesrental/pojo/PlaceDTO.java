@@ -23,5 +23,5 @@ public class PlaceDTO {
     private Integer cost;
 
     @ApiModelProperty(value = "空闲情况")
-    private List<Integer> available;
+    private List<List<Integer>> available;
 }

@@ -6,6 +6,7 @@ import com.rental.premisesrental.util.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,4 +41,6 @@ public class PlaceController {
     ) {
         return placeService.queryPlaceByShopId(id);
     }
+
+
 }

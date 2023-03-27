@@ -12,5 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface OrderService {
 
-    Response getOrder(Long placeId, Long beginTime, Long rentTime);
+
+    Response createOrder(Long shopId, Long placeId, Integer dayOffSet, Integer beginTime, Integer rentTime);
 }
