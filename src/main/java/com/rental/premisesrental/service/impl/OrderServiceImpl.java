@@ -51,12 +51,20 @@ public class OrderServiceImpl implements OrderService {
         List<Long> longs = JSON.parseArray(place.getAvailable()).toList(Long.class);
          // 取出一个列表
         Long day = longs.get(dayOffSet);
+
         long tem = 1;
         tem <<= (24 - beginTime - 1);
         for (int i = 1;i <= rentTime;i ++) {
-            day |= tem;
-            tem >>= 1;
+            if ((day&tem)==0){
+                day |= tem;
+                tem >>= 1;
+                continue;
+            }
+            return Response.fail().setFailMessage("预约时间冲突");
         }
+
+
+
         longs.set(dayOffSet,day);
         place.setAvailable(JSON.toJSONString(longs));
         placeMapper.update(place,placeLambdaQueryWrapper);
