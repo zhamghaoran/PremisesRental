@@ -1,4 +1,4 @@
-create table `Premises rental`.place
+create table `Premisesrental`.place
 (
     id          bigint auto_increment comment '场地id
 '
@@ -14,7 +14,7 @@ create table `Premises rental`.place
     constraint id
         unique (id),
     constraint place_shop_id_fk
-        foreign key (shop_id) references `Premises rental`.shop (id)
+        foreign key (shop_id) references `Premisesrental`.shop (id)
 )
     comment '场地信息';
 

@@ -1,4 +1,4 @@
-create table `Premises rental`.shop
+create table `Premisesrental`.shop
 (
     id          bigint auto_increment comment '商家Id
 '
