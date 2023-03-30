@@ -40,4 +40,13 @@ public class OrderController {
     public Response queryOrder() {
         return orderService.queryOrder();
     }
+
+    @GetMapping("/order/delete/{orderId}")
+    @ApiOperation(value = "删除订单")
+    public Response deleteOrder(
+            @ApiParam(value = "订单号")
+            @PathVariable
+            Long orderId) {
+        return orderService.deleteOrder(orderId);
+    }
 }

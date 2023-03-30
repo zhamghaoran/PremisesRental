@@ -36,8 +36,12 @@ public class Order {
 
     @ApiModelProperty(value = "租赁时间")
     private Integer rentTime;
+
     @ApiModelProperty(value = "订单创建时间")
     private Timestamp createTime;
+
+    @ApiModelProperty(value = "是否被删除")
+    private Integer isDeleted;
 
     public Order( Long userId,Long shopId, Long placeId, Timestamp beginRentTime, Integer rentTime, Timestamp timestamp) {
         this.userId = userId;
