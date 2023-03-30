@@ -1,21 +1,23 @@
 package com.rental.premisesrental.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.rental.premisesrental.entity.Order;
 import com.rental.premisesrental.entity.Place;
 import com.rental.premisesrental.mapper.OrderMapper;
 import com.rental.premisesrental.mapper.PlaceMapper;
+import com.rental.premisesrental.pojo.OrderDTO;
 import com.rental.premisesrental.service.OrderService;
 import com.rental.premisesrental.util.AvailableTimeUtil;
 import com.rental.premisesrental.util.Response;
 import com.rental.premisesrental.util.UserHolder;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,25 +51,37 @@ public class OrderServiceImpl implements OrderService {
         Place place = placeMapper.selectOne(placeLambdaQueryWrapper);
         // 获取到所有的列表
         List<Long> longs = JSON.parseArray(place.getAvailable()).toList(Long.class);
-         // 取出一个列表
+        // 取出一个列表
         Long day = longs.get(dayOffSet);
 
         long tem = 1;
         tem <<= (24 - beginTime - 1);
-        for (int i = 1;i <= rentTime;i ++) {
-            if ((day&tem)==0){
+        for (int i = 1; i <= rentTime; i++) {
+            if ((day & tem) != 0) {
                 day |= tem;
                 tem >>= 1;
                 continue;
             }
             return Response.fail().setFailMessage("预约时间冲突");
         }
-
-
-
-        longs.set(dayOffSet,day);
+        longs.set(dayOffSet, day);
         place.setAvailable(JSON.toJSONString(longs));
-        placeMapper.update(place,placeLambdaQueryWrapper);
+        placeMapper.update(place, placeLambdaQueryWrapper);
         return Response.success();
+    }
+
+    @Override
+    public Response queryOrder() {
+        Long userId = UserHolder.getCurrentUser().getId();
+        LambdaQueryWrapper<Order> orderLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        orderLambdaQueryWrapper.eq(Order::getUserId, userId);
+        List<Order> orders = orderMapper.selectList(orderLambdaQueryWrapper);
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        orders.forEach(i -> {
+            OrderDTO orderDTO = BeanUtil.copyProperties(i, OrderDTO.class);
+            orderDTO.setCertainTime(i.getBeginTime());
+            orderDTOS.add(orderDTO);
+        });
+        return Response.success().setSuccessData(orderDTOS);
     }
 }

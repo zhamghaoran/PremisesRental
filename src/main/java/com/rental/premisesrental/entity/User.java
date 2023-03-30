@@ -28,6 +28,8 @@ public class User {
     private String username;
     @ApiModelProperty(value = "手机号")
     private String phone;
+    @ApiModelProperty(value = "密码")
+    private String password;
     private Timestamp createTime;
     private Timestamp updateTime;
 

@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 20179
@@ -19,25 +16,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @Api(value = "用户注册登录")
+@CrossOrigin(value = "true")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "登录")
-    @PostMapping("/login")
-    public Response login(
+    @ApiOperation(value = "登录通过验证码")
+    @PostMapping("/login/code")
+    public Response loginByPhone(
             @ApiParam(value = "登录参数")
             @RequestBody LoginParam loginParam
     ) {
         return userService.Login(loginParam);
     }
 
+    @ApiOperation(value = "登录通过密码")
+    @PostMapping("/login/password")
+    public Response loginByPassword(
+            @ApiParam(value = "登录参数")
+            @RequestBody
+            LoginParam loginParam) {
+        return userService.LoginByPassword(loginParam);
+    }
 
     @ApiOperation(value = "发送验证码")
     @GetMapping("/sendMsg")
     public Response sendMsg(
             @ApiParam(value = "手机号")
-            String  phone){
+            String phone) {
         return userService.sendMsg(phone);
 
     }
@@ -48,7 +54,7 @@ public class UserController {
             @ApiParam(value = "登录参数")
             @RequestBody LoginParam loginParam
     ) {
-       return userService.register(loginParam);
+        return userService.register(loginParam);
 
     }
 }

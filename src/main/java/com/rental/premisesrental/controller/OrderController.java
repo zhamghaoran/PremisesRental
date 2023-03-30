@@ -7,15 +7,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 20179
  */
 @RestController
 @Api(value = "订单")
+@CrossOrigin
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -32,6 +31,13 @@ public class OrderController {
                 orderParam.getPlaceId(),
                 orderParam.getDayOffSet(),
                 orderParam.getBeginTime(),
-                orderParam.getRentTime());
+                orderParam.getRentTime()
+        );
+    }
+
+    @GetMapping("/order/get")
+    @ApiOperation(value = "查询用户订单")
+    public Response queryOrder() {
+        return orderService.queryOrder();
     }
 }

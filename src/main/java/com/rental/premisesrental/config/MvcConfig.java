@@ -22,7 +22,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/sendMsg/**",
                         "/register/**",
-                        "/login/**",
+                        "/login/*",
                         "/swagger-ui/**",
                         "/swagger-resources/**",
                         "/v2/**"

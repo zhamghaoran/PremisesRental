@@ -14,4 +14,6 @@ public interface OrderService {
 
 
     Response createOrder(Long shopId, Long placeId, Integer dayOffSet, Integer beginTime, Integer rentTime);
+
+    Response queryOrder();
 }

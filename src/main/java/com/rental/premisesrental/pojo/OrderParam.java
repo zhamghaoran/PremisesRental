@@ -1,5 +1,6 @@
 package com.rental.premisesrental.pojo;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(value = "下单请求数据")
 public class OrderParam {
     @ApiModelProperty(value = "商铺id")
     Long shopId;

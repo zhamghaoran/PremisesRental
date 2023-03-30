@@ -1,0 +1,68 @@
+2023-03-29 20:40:22.996  INFO 21276 --- [restartedMain] c.r.p.PremisesRentalApplication          : Starting PremisesRentalApplication using Java 19.0.2 on ASUS with PID 21276 (C:\Users\20179\IdeaProjects\PremisesRental\target\classes started by 20179 in C:\Users\20179\IdeaProjects\PremisesRental)
+2023-03-29 20:40:22.998  INFO 21276 --- [restartedMain] c.r.p.PremisesRentalApplication          : No active profile set, falling back to 1 default profile: "default"
+2023-03-29 20:40:23.040  INFO 21276 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-29 20:40:23.040  INFO 21276 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-29 20:40:24.020  INFO 21276 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-29 20:40:24.022  INFO 21276 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-29 20:40:24.044  INFO 21276 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2023-03-29 20:40:24.726  INFO 21276 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-03-29 20:40:24.734  INFO 21276 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-29 20:40:24.734  INFO 21276 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-03-29 20:40:24.810  INFO 21276 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-29 20:40:24.810  INFO 21276 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1768 ms
+2023-03-29 20:40:25.898  INFO 21276 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-29 20:40:26.100  INFO 21276 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-03-29 20:40:26.406  INFO 21276 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-29 20:40:26.596  INFO 21276 --- [restartedMain] c.r.p.PremisesRentalApplication          : Started PremisesRentalApplication in 3.989 seconds (JVM running for 4.897)
+2023-03-29 20:40:27.059  INFO 21276 --- [RMI TCP Connection(1)-192.168.124.10] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-29 20:40:27.060  INFO 21276 --- [RMI TCP Connection(1)-192.168.124.10] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-29 20:40:27.062  INFO 21276 --- [RMI TCP Connection(1)-192.168.124.10] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-03-29 20:40:27.061  INFO 21276 --- [RMI TCP Connection(2)-192.168.124.10] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-29 20:40:28.333  INFO 21276 --- [RMI TCP Connection(2)-192.168.124.10] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-29 20:43:33.582  INFO 21276 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-03-29 20:43:34.125  INFO 21276 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-03-29 21:22:45.361  INFO 10224 --- [restartedMain] c.r.p.PremisesRentalApplication          : Starting PremisesRentalApplication using Java 19.0.2 on ASUS with PID 10224 (C:\Users\20179\IdeaProjects\PremisesRental\target\classes started by 20179 in C:\Users\20179\IdeaProjects\PremisesRental)
+2023-03-29 21:22:45.365  INFO 10224 --- [restartedMain] c.r.p.PremisesRentalApplication          : No active profile set, falling back to 1 default profile: "default"
+2023-03-29 21:22:45.463  INFO 10224 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-29 21:22:45.463  INFO 10224 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-29 21:22:47.244  INFO 10224 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-29 21:22:47.248  INFO 10224 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-29 21:22:47.281  INFO 10224 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2023-03-29 21:22:48.323  INFO 10224 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-03-29 21:22:48.343  INFO 10224 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-29 21:22:48.344  INFO 10224 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-03-29 21:22:48.454  INFO 10224 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-29 21:22:48.455  INFO 10224 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2991 ms
+2023-03-29 21:22:49.966  INFO 10224 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-29 21:22:50.224  INFO 10224 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-03-29 21:22:50.638  INFO 10224 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-29 21:22:50.922  INFO 10224 --- [restartedMain] c.r.p.PremisesRentalApplication          : Started PremisesRentalApplication in 6.36 seconds (JVM running for 9.306)
+2023-03-29 21:23:03.043  INFO 10224 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-29 21:23:03.043  INFO 10224 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-29 21:23:03.047  INFO 10224 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2023-03-29 21:23:03.357  WARN 10224 --- [http-nio-8080-exec-1] c.b.m.c.t.support.ReflectLambdaMeta      : Unable to make field private final java.lang.Class java.lang.invoke.SerializedLambda.capturingClass accessible: module java.base does not "opens java.lang.invoke" to unnamed module @43bc63a3
+2023-03-29 21:23:03.386  INFO 10224 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-29 21:23:04.593  INFO 10224 --- [http-nio-8080-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-29 21:52:35.141  INFO 5092 --- [restartedMain] c.r.p.PremisesRentalApplication          : Starting PremisesRentalApplication using Java 19.0.2 on ASUS with PID 5092 (C:\Users\20179\IdeaProjects\PremisesRental\target\classes started by 20179 in C:\Users\20179\IdeaProjects\PremisesRental)
+2023-03-29 21:52:35.143  INFO 5092 --- [restartedMain] c.r.p.PremisesRentalApplication          : No active profile set, falling back to 1 default profile: "default"
+2023-03-29 21:52:35.236  INFO 5092 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-03-29 21:52:35.237  INFO 5092 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-03-29 21:52:37.854  INFO 5092 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-03-29 21:52:37.861  INFO 5092 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-03-29 21:52:37.911  INFO 5092 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+2023-03-29 21:52:39.788  INFO 5092 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-03-29 21:52:39.816  INFO 5092 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-03-29 21:52:39.816  INFO 5092 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.69]
+2023-03-29 21:52:40.051  INFO 5092 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-03-29 21:52:40.052  INFO 5092 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4806 ms
+2023-03-29 21:52:43.400  INFO 5092 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2023-03-29 21:52:43.808  INFO 5092 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-03-29 21:52:44.308  INFO 5092 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-03-29 21:52:44.559  INFO 5092 --- [restartedMain] c.r.p.PremisesRentalApplication          : Started PremisesRentalApplication in 10.378 seconds (JVM running for 13.194)
+2023-03-29 21:52:44.893  INFO 5092 --- [RMI TCP Connection(5)-192.168.57.64] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-03-29 21:52:44.893  INFO 5092 --- [RMI TCP Connection(5)-192.168.57.64] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-03-29 21:52:44.894  INFO 5092 --- [RMI TCP Connection(6)-192.168.57.64] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-03-29 21:52:44.898  INFO 5092 --- [RMI TCP Connection(5)-192.168.57.64] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2023-03-29 21:52:45.880  INFO 5092 --- [RMI TCP Connection(6)-192.168.57.64] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-03-29 21:59:04.718  INFO 5092 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-03-29 21:59:05.374  INFO 5092 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

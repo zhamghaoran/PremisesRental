@@ -12,8 +12,12 @@ spring:
   redis:
     host:
     port: 6379
-    password: 
+    password:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  file:
+    path: /log
+    name: mylog
 

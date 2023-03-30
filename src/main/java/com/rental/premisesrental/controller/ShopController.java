@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @Api(value = "商铺")
+@CrossOrigin
 public class ShopController {
     @Autowired
     private ShopService shopService;

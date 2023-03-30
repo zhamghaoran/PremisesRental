@@ -28,7 +28,7 @@ import static com.rental.premisesrental.util.constant.USER_TOKEN;
  */
 @Service
 @Slf4j
-public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -59,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             }
             String token = MD5Util.createUserToken(user);
             //登录成功,就把生成得token交付给前端.
-            putUserIntoRedis(user,token);
+            putUserIntoRedis(user, token);
             return Response.success().setSuccessData(token);
         }
         return Response.fail();
@@ -73,8 +73,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             //发送短信,还需要更改
             SMSUtils.sendMessage("PremisesRent", "SMS_272605519", phone, code);
             //需要将生成的验证码保存到redis中进行缓存
-            stringRedisTemplate.opsForValue().set(PHONE_CODE + phone,code);
-            stringRedisTemplate.expire(PHONE_CODE + phone,5, TimeUnit.MINUTES);
+            stringRedisTemplate.opsForValue().set(PHONE_CODE + phone, code);
+            stringRedisTemplate.expire(PHONE_CODE + phone, 5, TimeUnit.MINUTES);
             return Response.success().setSuccessMessage("发送成功");
         }
         return Response.fail();
@@ -84,37 +84,54 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
     public Response register(LoginParam loginParam) {
         String phone = loginParam.getPhone();
         Integer code = loginParam.getCode();
+        String password = loginParam.getPassword();
         //存储phone和code
         String s = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
         if (StringUtils.isEmpty(s) || code == null || !s.equals(code.toString())) {
-            return Response.fail();
+            return Response.fail().setFailMessage("验证码错误");
         }
         //根据phone查询数据库中的用户信息
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        userLambdaQueryWrapper.eq(User::getPhone,phone);
+        userLambdaQueryWrapper.eq(User::getPhone, phone);
         List<User> users = userMapper.selectList(userLambdaQueryWrapper);
         //不为空就直接退出
         if (!users.isEmpty()) {
             return Response.fail().setFailMessage("用户已注册");
         }
         User user = new User();
+        user.setPassword(password);
         user.setPhone(phone);
         user.setUsername(loginParam.getUsername());
         userMapper.insert(user);
         String token = MD5Util.createUserToken(user);
-        putUserIntoRedis(user,token);
+        putUserIntoRedis(user, token);
         //将token存放到前端中
         return Response.success().setSuccessData(token);
     }
 
+    @Override
+    public Response LoginByPassword(LoginParam loginParam) {
+
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(User::getPhone, loginParam.getPhone());
+        userLambdaQueryWrapper.eq(User::getPassword, loginParam.getPassword());
+        userLambdaQueryWrapper.eq(User::getUsername, loginParam.getUsername());
+        User user = userMapper.selectOne(userLambdaQueryWrapper);
+        if (user == null) {
+            return Response.fail().setFailMessage("登录失败");
+        }
+        String token = MD5Util.createUserToken(user);
+        putUserIntoRedis(user, token);
+        return Response.success().setSuccessData(token);
+    }
+
     /**
-     *
      * //这一步可以将用户的登录token放到redis中进行保存
      */
-    private void putUserIntoRedis(User user,String token) {
+    private void putUserIntoRedis(User user, String token) {
         stringRedisTemplate.opsForValue().set(USER_TOKEN + token, JSON.toJSONString(user));
         //这一步是用来给token设置时间
-        stringRedisTemplate.expire(USER_TOKEN + token,1,TimeUnit.HOURS);
+        stringRedisTemplate.expire(USER_TOKEN + token, 1, TimeUnit.HOURS);
     }
 
 }
