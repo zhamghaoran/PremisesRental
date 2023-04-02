@@ -53,9 +53,16 @@ public class ShopController {
     @ApiOperation(value = "获取商铺列表")
     public Response queryShopList(
             @ApiParam(value = "页码")
-            @PathVariable("page")Integer page,
+            @PathVariable("page") Integer page,
             @ApiParam(value = "每页上限")
             @PathVariable("limit") Integer limit) {
-        return shopService.queryList(page,limit);
+        return shopService.queryList(page, limit);
     }
+
+    @ApiOperation(value = "查询用户商铺")
+    @GetMapping("/shop/query/mine")
+    public Response queryMyShop() {
+        return shopService.queryMyShop();
+    }
+
 }

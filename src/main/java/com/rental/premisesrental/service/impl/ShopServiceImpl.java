@@ -80,6 +80,15 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
 
     }
 
+    @Override
+    public Response queryMyShop() {
+        Long id = UserHolder.getCurrentUser().getId();
+        LambdaQueryWrapper<Shop> shopLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        shopLambdaQueryWrapper.eq(Shop::getOwnerId,id);
+        List<Shop> shops = shopMapper.selectList(shopLambdaQueryWrapper);
+        return Response.success().setSuccessData(shops);
+    }
+
     //缓存击穿
     public Shop queryWthMutex(Long id) {
         String key = CACHE_SHOP_KEY + id;

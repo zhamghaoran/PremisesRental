@@ -9,14 +9,17 @@ import com.rental.premisesrental.mapper.UserMapper;
 import com.rental.premisesrental.pojo.LoginParam;
 import com.rental.premisesrental.service.UserService;
 import com.rental.premisesrental.util.*;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.TestOnly;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -75,6 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //需要将生成的验证码保存到redis中进行缓存
             stringRedisTemplate.opsForValue().set(PHONE_CODE + phone, code);
             stringRedisTemplate.expire(PHONE_CODE + phone, 5, TimeUnit.MINUTES);
+            log.info("验证码: ${}",code);
             return Response.success().setSuccessMessage("发送成功");
         }
         return Response.fail();
@@ -86,8 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Integer code = loginParam.getCode();
         String password = loginParam.getPassword();
         //存储phone和code
-        String s = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
-        if (StringUtils.isEmpty(s) || code == null || !s.equals(code.toString())) {
+        if (!judgeCodeInRedis(phone,code)) {
             return Response.fail().setFailMessage("验证码错误");
         }
         //根据phone查询数据库中的用户信息
@@ -106,7 +109,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String token = MD5Util.createUserToken(user);
         putUserIntoRedis(user, token);
         //将token存放到前端中
-        return Response.success().setSuccessData(token);
+        return Response.success().setSuccessMessage("注册成功").setSuccessData(token);
     }
 
     @Override
@@ -125,6 +128,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return Response.success().setSuccessData(token);
     }
 
+    @Override
+    public Response forgetPassword(LoginParam loginParam) {
+        if (!judgeCodeInRedis(loginParam.getPhone(),loginParam.getCode())) {
+            return Response.fail().setFailMessage("验证码错误");
+        }
+        User user = new User(
+                null,
+                loginParam.getUsername(),
+                loginParam.getPhone(),
+                loginParam.getPassword(),
+                null,
+                new Timestamp(System.currentTimeMillis())
+        );
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(User::getPhone,user.getPhone());
+        int update = userMapper.update(user, userLambdaQueryWrapper);
+        if (update > 0 )  {
+            return Response.success().setSuccessMessage("修改成功");
+        }
+        return Response.fail().setFailMessage("修改失败");
+    }
+
+
     /**
      * //这一步可以将用户的登录token放到redis中进行保存
      */
@@ -134,4 +160,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         stringRedisTemplate.expire(USER_TOKEN + token, 1, TimeUnit.HOURS);
     }
 
+    private boolean judgeCodeInRedis(String phone, Integer code) {
+        String s = stringRedisTemplate.opsForValue().get(PHONE_CODE + phone);
+        if (StringUtils.isEmpty(s) || code == null || !s.equals(code.toString())) {
+            return false;
+        }
+        return true;
+    }
 }

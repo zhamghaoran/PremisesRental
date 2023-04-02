@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageCo
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author 20179
  */
 @SpringBootApplication
+@EnableScheduling
 public class PremisesRentalApplication  extends WebMvcConfigurerAdapter {
     /**
      * 配置FastJson为方式一

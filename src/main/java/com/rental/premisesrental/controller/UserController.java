@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @Api(value = "用户注册登录")
-@CrossOrigin(value = "true")
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
@@ -56,5 +56,14 @@ public class UserController {
     ) {
         return userService.register(loginParam);
 
+    }
+    @ApiOperation(value = "忘记密码")
+    @PostMapping("/forget/password")
+    public Response forgetPassword(
+            @ApiParam(value = "参数")
+            @RequestBody
+            LoginParam loginParam
+    ) {
+        return userService.forgetPassword(loginParam);
     }
 }

@@ -13,4 +13,6 @@ public interface ShopService  {
     Response queryShopById(Long id);
 
     Response queryList(Integer page, Integer limit);
+
+    Response queryMyShop();
 }
