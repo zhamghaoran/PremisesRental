@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.rental.premisesrental.entity.Order;
 import com.rental.premisesrental.entity.Place;
 import com.rental.premisesrental.mapper.OrderMapper;
@@ -14,6 +13,7 @@ import com.rental.premisesrental.service.OrderService;
 import com.rental.premisesrental.util.AvailableTimeUtil;
 import com.rental.premisesrental.util.Response;
 import com.rental.premisesrental.util.UserHolder;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,12 +47,13 @@ public class OrderServiceImpl implements OrderService {
                 rentTime,
                 new Timestamp(System.currentTimeMillis())
         );
+        orderMapper.insert(order);
         LambdaQueryWrapper<Place> placeLambdaQueryWrapper = new LambdaQueryWrapper<>();
         placeLambdaQueryWrapper.eq(Place::getId, placeId);
         Place place = placeMapper.selectOne(placeLambdaQueryWrapper);
         // 获取到所有的列表
         List<Long> longs = JSON.parseArray(place.getAvailable()).toList(Long.class);
-        // 取出一个列表
+         // 取出一个列表
         Long day = longs.get(dayOffSet);
 
         long tem = 1;
