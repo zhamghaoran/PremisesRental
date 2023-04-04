@@ -1,6 +1,8 @@
 package com.rental.premisesrental.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.rental.premisesrental.entity.Shop;
+import com.rental.premisesrental.pojo.ShopParam;
 import com.rental.premisesrental.service.ShopService;
 import com.rental.premisesrental.util.Response;
 import io.swagger.annotations.Api;
@@ -34,8 +36,10 @@ public class ShopController {
     public Response updateShop(
             @RequestBody
             @ApiParam(value = "商铺信息")
-            Shop shop
-    ) {
+            ShopParam shopParam
+    ) throws InterruptedException {
+        Shop shop = BeanUtil.copyProperties(shopParam, Shop.class);
+        shop.setId(Long.parseLong(shopParam.getId()));
         return shopService.updateShop(shop);
     }
 
@@ -44,9 +48,10 @@ public class ShopController {
     @ApiOperation(value = "查询商铺")
     public Response queryShopById(
             @ApiParam(value = "商铺信息")
-            @PathVariable("id") Long id
+            @PathVariable("id") String id
     ) {
-        return shopService.queryShopById(id);
+        Long id1 = Long.parseLong(id);
+        return shopService.queryShopById(id1);
     }
 
     @GetMapping("/shop/list/{page}/{limit}")

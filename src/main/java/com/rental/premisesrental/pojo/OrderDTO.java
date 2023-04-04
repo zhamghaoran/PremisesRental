@@ -13,12 +13,13 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
-    @ApiModelProperty(value = "店铺id")
-    private Long orderId;
+    @ApiModelProperty(value = "订单id")
+    private String id;
+
     @ApiModelProperty(value = "商铺id")
-    private Long shopId;
+    private String shopId;
     @ApiModelProperty(value = "用户id")
-    private Long userId;
+    private String userId;
     @ApiModelProperty(value = "租赁时间")
     private Integer rentTime;
     @ApiModelProperty(value = "下单时间")

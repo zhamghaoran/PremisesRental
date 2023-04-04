@@ -68,6 +68,7 @@ public class PlaceServiceImpl implements PlaceService {
         places.forEach(i -> {
             PlaceDTO placeDTO = BeanUtil.copyProperties(i, PlaceDTO.class);
             placeDTO.setAvailable(AvailableTimeUtil.decimaltoList(i.getAvailable()));
+            placeDTO.setId(i.getId().toString());
             placeDTOS.add(placeDTO);
         });
         return Response.success().setSuccessData(placeDTOS);

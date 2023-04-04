@@ -16,11 +16,16 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(value = "返回的场地数据")
 public class PlaceDTO {
+    private String id;
+
     @ApiModelProperty(value = "场地类型",required = true)
     private String type;
 
     @ApiModelProperty(value = "场地单价",required = true)
     private Integer cost;
+
+    @ApiModelProperty(value = "描述")
+    private String description;
 
     @ApiModelProperty(value = "空闲情况")
     private List<List<Integer>> available;

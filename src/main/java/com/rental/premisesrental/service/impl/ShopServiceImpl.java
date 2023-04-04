@@ -1,5 +1,6 @@
 package com.rental.premisesrental.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -10,9 +11,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rental.premisesrental.entity.Shop;
 import com.rental.premisesrental.mapper.ShopMapper;
+import com.rental.premisesrental.pojo.ShopParam;
 import com.rental.premisesrental.service.ShopService;
 import com.rental.premisesrental.util.Response;
 import com.rental.premisesrental.util.UserHolder;
+import org.redisson.api.RedissonClient;
+import org.redisson.client.RedisClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +40,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
     @Resource
     StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private RedissonClient redisClient;
+
     @Override
     public Response addShop(Shop shop) {
         shop.setOwnerId(UserHolder.getCurrentUser().getId());
@@ -46,7 +54,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
     }
 
     @Override
-    public Response updateShop(Shop shop) {
+    public Response updateShop(Shop shop) throws InterruptedException {
         Long id = shop.getId();
         if (id == null) {
             return Response.fail().setFailMessage("店铺id不能为空");
@@ -54,11 +62,15 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
         String key = CACHE_SHOP_KEY + id;
         //更新数据库
         shop.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        boolean b = redisClient.getLock(LOCK_SHOP_KEY + id).tryLock(10, TimeUnit.SECONDS);
+        if (!b) {
+            return Response.fail().setFailMessage("请求超时");
+        }
         updateById(shop);
         //删除redis中的数据
         stringRedisTemplate.delete(key);
-
-        return Response.success();
+        redisClient.getLock(LOCK_SHOP_KEY + id).unlock();
+        return Response.success().setSuccessMessage("成功添加");
     }
 
 
@@ -68,6 +80,10 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
         if (shop == null) {
             return Response.fail();
         }
+        ShopParam shopParam = BeanUtil.copyProperties(shop, ShopParam.class);
+        shopParam.setId(shop.getId().toString());
+        shopParam.setOwnerId(shop.getOwnerId().toString());
+        String key = CACHE_SHOP_KEY + id;
         return Response.success().setSuccessData(shop);
     }
 
@@ -76,7 +92,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
 
         Page<Shop> shopPage = new Page<>(page, limit);
         List<Shop> records = shopMapper.selectPage(shopPage, null).getRecords();
-        return Response.success().setSuccessData(records);
+        return copy(records);
 
     }
 
@@ -86,7 +102,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
         LambdaQueryWrapper<Shop> shopLambdaQueryWrapper = new LambdaQueryWrapper<>();
         shopLambdaQueryWrapper.eq(Shop::getOwnerId,id);
         List<Shop> shops = shopMapper.selectList(shopLambdaQueryWrapper);
-        return Response.success().setSuccessData(shops);
+        return copy(shops);
     }
 
     //缓存击穿
@@ -96,6 +112,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
         if (StrUtil.isNotBlank(shopJSON)) {
             return JSONUtil.toBean(shopJSON, Shop.class);
         }
+        // ""
         if (shopJSON != null) {
             return null;
         }
@@ -118,7 +135,6 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
         } finally {
             unlock(lockKey);
         }
-
         return shop;
 
     }
@@ -131,7 +147,16 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
     private void unlock(String key) {
         stringRedisTemplate.delete(key);
     }
-
+    private Response copy(List<Shop> shops) {
+        List<ShopParam> shopParams = new ArrayList<>();
+        shops.forEach(i -> {
+            ShopParam shopParam = BeanUtil.copyProperties(i, ShopParam.class);
+            shopParam.setId(i.getId().toString());
+            shopParam.setOwnerId(i.getOwnerId().toString());
+            shopParams.add(shopParam);
+        });
+        return Response.success().setSuccessData(shopParams);
+    }
 
 }
 

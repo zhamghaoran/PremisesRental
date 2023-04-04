@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @ApiModel(value = "下单请求数据")
 public class OrderParam {
     @ApiModelProperty(value = "商铺id")
-    Long shopId;
+    String shopId;
 
     @ApiModelProperty(value = "场地id")
-    Long placeId;
+    String placeId;
 
     @ApiModelProperty(value = "时间偏移量")
     Integer dayOffSet;

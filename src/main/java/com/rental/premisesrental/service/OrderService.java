@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 public interface OrderService {
 
 
-    Response createOrder(Long shopId, Long placeId, Integer dayOffSet, Integer beginTime, Integer rentTime);
+    Response createOrder(Long shopId, Long placeId, Integer dayOffSet, Integer beginTime, Integer rentTime) throws InterruptedException;
 
     Response queryOrder();
 
-    Response deleteOrder(Long orderId);
+    Response deleteOrder(Long orderId) throws InterruptedException;
 }

@@ -25,10 +25,10 @@ public class OrderController {
             @ApiParam(value = "登录参数")
             @RequestBody
             OrderParam orderParam
-    ) {
+    ) throws InterruptedException {
         return orderService.createOrder(
-                orderParam.getShopId(),
-                orderParam.getPlaceId(),
+                Long.parseLong(orderParam.getShopId()),
+                Long.parseLong(orderParam.getPlaceId()),
                 orderParam.getDayOffSet(),
                 orderParam.getBeginTime(),
                 orderParam.getRentTime()
@@ -46,7 +46,7 @@ public class OrderController {
     public Response deleteOrder(
             @ApiParam(value = "订单号")
             @PathVariable
-            Long orderId) {
-        return orderService.deleteOrder(orderId);
+            String orderId) throws InterruptedException {
+        return orderService.deleteOrder(Long.parseLong(orderId));
     }
 }

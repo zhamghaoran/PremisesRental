@@ -35,9 +35,9 @@ public class PlaceController {
     @GetMapping("/get/place/list")
     public Response queryPlaceByShopId(
             @ApiParam(value = "商铺id")
-            Long id
+            String id
     ) {
-        return placeService.queryPlaceByShopId(id);
+        return placeService.queryPlaceByShopId(Long.parseLong(id));
     }
 
 

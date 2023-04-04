@@ -7,7 +7,7 @@ import com.rental.premisesrental.util.Response;
 public interface ShopService  {
     Response addShop(Shop shop);
 
-    Response updateShop(Shop shop);
+    Response updateShop(Shop shop) throws InterruptedException;
 
 
     Response queryShopById(Long id);

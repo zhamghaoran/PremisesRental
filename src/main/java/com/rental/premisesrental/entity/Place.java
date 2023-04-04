@@ -21,6 +21,9 @@ public class Place {
     @TableId(value = "id")
     private Long id;
 
+    @ApiModelProperty(value = "描述")
+    private String description;
+
     @ApiModelProperty(value = "场地类型",required = true)
     private String type;
 
